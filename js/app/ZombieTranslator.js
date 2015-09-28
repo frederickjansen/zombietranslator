@@ -98,9 +98,9 @@ define([], function () {
      *
      * Split into two capturing groups to differentiate between r and end of word and other letters r.
      */
-    return str.replace(/(hr\b|hra|rr|rrRr|rrrRr|rrrrRr|RR|ZZZ\b|SSS\b)/g, function (match, p1) {
+    var letterReplacePass = str.replace(/(rh\b|hra|rr|rrRr|rrrRr|rrrrRr|RR|ZZZ\b|SSS\b)/g, function (match, p1) {
       switch (p1) {
-        case 'hr':
+        case 'rh':
           return 'r';
         case 'hra':
           return 'a';
