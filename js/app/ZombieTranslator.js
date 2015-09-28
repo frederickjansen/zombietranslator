@@ -75,8 +75,53 @@ define([], function () {
     return capitalizationPass;
   };
 
+  /**
+   *
+   * @param str
+   * @returns string
+   */
   ZombieTranslator.prototype.zombieToEnglish = function (str) {
-
+    /*
+     * Do to the way the rules are defined, uppercase characters might be replaced with lowercase ones
+     *
+     * Rules:
+     * lower-case "rh" at the end of words replaced with "r".
+     * an "hra" is replaced with "a".
+     * the starts of sentences are made lowercase (the "start of a sentence" is any occurrence of ".!?", followed by a space, followed by a letter.)
+     * "rr" is replaced by "e"
+     * "rrRr" is replaced by "i"
+     * "rrrRr" is replaced by "o"
+     * "rrrrRr" is replaced by "u"
+     * "RR" is replaced by "r"
+     * "ZZZ" at end of word is replaced by "z"
+     * "SSS" at end of word is replaced by "s"
+     *
+     * Split into two capturing groups to differentiate between r and end of word and other letters r.
+     */
+    return str.replace(/(hr\b|hra|rr|rrRr|rrrRr|rrrrRr|RR|ZZZ\b|SSS\b)/g, function (match, p1) {
+      switch (p1) {
+        case 'hr':
+          return 'r';
+        case 'hra':
+          return 'a';
+        case 'rr':
+          return 'e';
+        case 'rrRr':
+          return 'i';
+        case 'rrrRr':
+          return 'o';
+        case 'rrrrRr':
+          return 'u';
+        case 'RR':
+          return 'r';
+        case 'ZZZ':
+          return 'z';
+        case 'SSS':
+          return 's';
+        default:
+          return p1;
+      }
+    });
   };
 
   return ZombieTranslator;
