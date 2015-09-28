@@ -3,9 +3,36 @@ define([], function () {
 
   }
 
+  /**
+   *
+   * @param str
+   * @returns string
+   */
   ZombieTranslator.prototype.englishToZombie = function (str) {
-    return str.replace(/(r\b|a|A|e|E|i|I|o|O|u|U|R)/ig, function (match, p1) {
+    /*
+     * Rules:
+     * lower-case "r" at the end of words replaced with "rh".
+     * an "a" or "A" is replaced with "hra".Edited to be easier.
+     * the starts of sentences are capitalized (the "start of a sentence" is any occurrence of ".!?", followed by a space, followed by a letter.)
+     * "e" or "E" is replaced by "rr"
+     * "i" or "I" is replaced by "rrRr"
+     * "o" or "O" is replaced by "rrrRr"
+     * "u" or "U" is replaced by "rrrrRr"
+     * "r" or "R" is replaced by "RR"
+     * "z" at end of word is replaced by "ZZZ"
+     * "s" at end of word is replace by "SSS"
+     *
+     * Split into two capturing groups to differentiate between r and end of word and other letters r.
+     */
+    var letterReplacePass = str.replace(/(r\b)|(a|A|e|E|i|I|o|O|u|U|r|R|z\b|s\b)/g, function (match, p1, p2) {
+      // Check first capturing group, r at end of string
       switch (p1) {
+        case 'r':
+          return 'rh';
+      }
+
+      // Check second capturing group, regular letter replace
+      switch (p2) {
         case 'a':
           return 'hra';
         case 'A':
@@ -30,10 +57,22 @@ define([], function () {
           return 'RR';
         case 'R':
           return 'RR';
-        default:
-          return p1;
+        case 'z':
+          return 'ZZZ';
+        case 's':
+          return 'SSS';
       }
+
+      // If we have a match but no replacement rule, just return the match
+      return typeof p1 === 'undefined' ? p2 : p1;
     });
+
+    // Detect first character of new sentence with lookahead, used for capitalization
+    var capitalizationPass = letterReplacePass.replace(/(\.|\?|!)(=?\s\w)/g, function (match) {
+      return match.substr(0, 2) + match.substr(-1, 1).toUpperCase();
+    });
+
+    return capitalizationPass;
   };
 
   ZombieTranslator.prototype.zombieToEnglish = function (str) {
