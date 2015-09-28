@@ -4,15 +4,15 @@ define([], function () {
   }
 
   /**
-   *
-   * @param str
-   * @returns string
+   * Translates string from English to Zombie
+   * @param str Input string in English
+   * @returns string Output string in Zombie
    */
   ZombieTranslator.prototype.englishToZombie = function (str) {
     /*
      * Rules:
      * lower-case "r" at the end of words replaced with "rh".
-     * an "a" or "A" is replaced with "hra".Edited to be easier.
+     * an "a" or "A" is replaced with "hra"
      * the starts of sentences are capitalized (the "start of a sentence" is any occurrence of ".!?", followed by a space, followed by a letter.)
      * "e" or "E" is replaced by "rr"
      * "i" or "I" is replaced by "rrRr"
@@ -76,9 +76,9 @@ define([], function () {
   };
 
   /**
-   *
-   * @param str
-   * @returns string
+   * Translates string from Zombie to English
+   * @param str Input string in Zombie
+   * @returns string Output string in English
    */
   ZombieTranslator.prototype.zombieToEnglish = function (str) {
     /*
