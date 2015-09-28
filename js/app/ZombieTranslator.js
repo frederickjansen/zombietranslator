@@ -122,6 +122,13 @@ define([], function () {
           return p1;
       }
     });
+
+    // Detect first character of new sentence with lookahead, used for capitalization
+    var capitalizationPass = letterReplacePass.replace(/(\.|\?|!)(=?\s\w)/g, function (match) {
+      return match.substr(0, 2) + match.substr(-1, 1).toLowerCase();
+    });
+
+    return capitalizationPass;
   };
 
   return ZombieTranslator;
