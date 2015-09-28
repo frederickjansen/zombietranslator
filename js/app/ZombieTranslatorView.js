@@ -1,21 +1,24 @@
-define(['jquery', 'app/ZombieTranslator'], function($, ZombieTranslator) {
+define(['jquery', 'app/ZombieTranslator'], function ($, ZombieTranslator) {
 
   function ZombieTranslatorView(config) {
     // initialize
     console.log('ZombieTranslatorView constructor');
-     this.config = config || {};
-     this.$english = this.config.english || $('#english');
-     this.$zombie = this.config.zombie || $('#zombie');
+    this.config = config || {};
+    this.$english = this.config.english || $('#english');
+    this.$zombie = this.config.zombie || $('#zombie');
 
-     this.zombieTranslator = new ZombieTranslator();
+    this.zombieTranslator = new ZombieTranslator();
 
-     this.listenKeyInput();
+    this.listenKeyInput();
   }
 
-  ZombieTranslatorView.prototype.listenKeyInput = function() {
+  ZombieTranslatorView.prototype.listenKeyInput = function () {
     var that = this;
-    this.$english.on('keyup', function(e) {
+    this.$english.on('keyup', function (e) {
       that.$zombie.val(that.zombieTranslator.englishToZombie($('#english').val()));
+    });
+    this.$zombie.on('keyup', function (e) {
+      that.$english.val(that.zombieTranslator.zombieToEnglish($('#zombie').val()));
     });
   };
 
