@@ -81,6 +81,11 @@ define([], function () {
    * @returns string Output string in English
    */
   ZombieTranslator.prototype.zombieToEnglish = function (str) {
+    // Detect first character of new sentence with lookahead, used for capitalization
+    var capitalizationPass = str.replace(/(\.|\?|!)(=?\s\w)/g, function (match) {
+      return match.substr(0, 2) + match.substr(-1, 1).toLowerCase();
+    });
+
     /*
      * Do to the way the rules are defined, uppercase characters might be replaced with lowercase ones
      *
@@ -98,7 +103,7 @@ define([], function () {
      *
      * Split into two capturing groups to differentiate between r and end of word and other letters r.
      */
-    var letterReplacePass = str.replace(/(rh\b|hra|rr|rrRr|rrrRr|rrrrRr|RR|ZZZ\b|SSS\b)/g, function (match, p1) {
+    var letterReplacePass = capitalizationPass.replace(/(rh\b|hra|rrRr|rrrRr|rrrrRr|rr|RR|ZZZ\b|SSS\b)/g, function (match, p1) {
       switch (p1) {
         case 'rh':
           return 'r';
@@ -123,12 +128,7 @@ define([], function () {
       }
     });
 
-    // Detect first character of new sentence with lookahead, used for capitalization
-    var capitalizationPass = letterReplacePass.replace(/(\.|\?|!)(=?\s\w)/g, function (match) {
-      return match.substr(0, 2) + match.substr(-1, 1).toLowerCase();
-    });
-
-    return capitalizationPass;
+    return letterReplacePass;
   };
 
   return ZombieTranslator;
