@@ -1,69 +1,75 @@
-*The end is nigh!*
-But we can prepare. In this assignment we will begin preparing for the end by creating a simple zombie translator. This can be used by the living for either concealment or bartering and the living impaired will have an easier time asking for brains. 
+# ZombieTranslator
+This assignment for HES CSCI E-32 uses a series of regular expression to translate English to Zombie and vice versa. 
 
-The translator can be done as a series of regular expressions (Links to an external site.) or you can step through it character by character. You get a string and you transform that string. 
+## The Tests
 
-## The Rules
+Each rule has basic unit tests along with 3 additional ones requested in the assignment. Only the additional ones are listed here.
 
-There are some sample rules contained in the skeleton source code and are as follows:
-
-lower-case "r" at the end of words replaced with "rh".
-an "a" or "A" is replaced with "hra". *Edited to be easier.* 
-the starts of sentences are capitalized (the "start of a sentence" is any occurrence of ".!?", followed by a space, followed by a letter.)
-"e" or "E" is replaced by "rr"
-"i" or "I" is replaced by "rrRr"
-"o" or "O" is replaced by "rrrRr"
-"u" or "U" is replaced by "rrrrRr"
-"r" or "R" is replaced by "RR"
- 
-
-There should be 10 rules total. So make 2 rules up. ~~Each rule should be a separate function.~~ *Edited out. Unnecessary*
-
-Make use of 3 different jasmine "expect" methods per rule. http://jasmine.github.io/2.3/introduction.html (Links to an external site.) Zombies are known to be able to repeat the same statements over and over. We want to make sure the rules are not written by the undead and aren't just a list of expect(myFunc('i')).toBe('rrRr');
-
-For example:
+* lower-case "r" at the end of words replaced with "rh".
 ```
-expect(30).toBe(30);
-expect(undefinedVariable).toBeUndefined();
-expect('30').toContain('0');
-expect(callback).not.toHaveBeenCalledWith(jasmine.stringMatching(/^bar$/));
+expect(zombieTranslator.englishToZombie('r')).toMatch(/rh/);
+expect(a).toEqual(12);
+expect(undefined).not.toBeNull();
 ```
- 
-
-What really matters is the structure. The last thing the resistance needs is for zombies to write false translators to trick us. We need to make sure a human, professional developer created the zombie translator. We all know zombies don't know how to write modular code, and they never test. 
-
-Each of the rules needs to be modular enough to test separately. There should also be a test for the entire function. 
-
-### Rules Shouldn't Overlap
-
-Running most of these rules is going to produce some "r"s. You shouldn't be running any of the "r" rules on the r's that are produced from other rules. Yes, that sounds confusing. Here's some examples to help you out. Maybe you could write some tests with these?
+* an "a" or "A" is replaced with "hra".
 ```
-Terror -> TrrRRRRrrrRrrh 
+expect(function(){i++}).toThrow();
+expect(function(){throw new Error}).toThrowError();
+expect(3.14).toBeCloseTo(Math.PI, 2);
 
-JaZahn -> JhraZhrahn
-
-petty -> prrtty
-
-pretty -> pRRrrtty
-
-brains -> bRRhrarrRrns
-
-onomatopoeia  -> rrrRrnrrrRrmhratrrrRrprrrRrrrrrRrhra
+```
+* the starts of sentences are capitalized (the "start of a sentence" is any occurrence of ".!?", followed by a space, followed by a letter.)
+```
+expect(Math.E).not.toBeCloseTo(Math.PI, 1);
+expect(a).toBeFalsy();
+expect(a).toBeTruthy();
+```
+* "e" or "E" is replaced by "rr"
+```
+expect(zombieTranslator.englishToZombie(31)).toBe('31');
+expect('31').toContain('1');
+expect('31').not.toContain('2');
+```
+* "i" or "I" is replaced by "rrRr"
+```
+expect(zombieTranslator.englishToZombie(true)).toBe('tRRrrrrRrrr'); // Convert all input to strings
+expect(2).toBeGreaterThan(1);
+expect(1).toBeLessThan(2);
+```
+* "o" or "O" is replaced by "rrrRr"
+```
+expect(true).toBe(true);
+expect(NaN).toBeNaN();
+expect(3).not.toBeNaN();
+```
+* "u" or "U" is replaced by "rrrrRr"
+```
+expect(foo.bar).toHaveBeenCalled();
+expect(foo.bar).not.toHaveBeenCalled();
+expect(foo.bar).toHaveBeenCalledWith(1);
+```
+* "r" or "R" is replaced by "RR"
+```
+expect(zombieTranslator.englishToZombie('R')).not.toMatch('rr');
+expect(true).not.toBe(false);
+expect(foo.bar).not.toHaveBeenCalledWith(1);
 ```
 
-## Starting point
-You can use this repository for a starting point: https://github.com/CSCI-E32/zombietranslator (Links to an external site.) 
+Additionally two rules have been added:
 
-## Submission
-Zip up the project when you're done and submit the zip file. 
-
-## Have to use
-You have to use RequireJS and Jasmine and Karma. 
-
-Tests need to be run with Karma. Jasmine Tests. On RequireJS modules.
+* "s" at the end of a word is replaced with "SSS"
+```
+expect(zombieTranslator.englishToZombie('s')).toBeDefined();
+expect(a).toBeUndefined();
+expect(foo.bar.calls.count()).toEqual(2);
+```
+* "z" at the end of a word is replaced with "ZZZ"
+```
+expect(null).toBeNull();
+expect(function(){}).not.toThrow();
+expect(function(){}).not.toThrowError();
+```
 
 ## Extra credit 
-*20pts*
-If you correctly "unzombify" (with tests).
-
-*NOTE: not everything will unzombify perfectly. That's okay. My rules aren't perfect. Best effort on this. *
+Unzombify has been implemented and is unit tested. Just click on the input field and start typing.
+Some letter combinations fail to translate back, like ei becoming u. This is unavoidable.
