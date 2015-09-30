@@ -70,19 +70,28 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
           expect(zombieTranslator.englishToZombie('U')).toBe('rrrrRr');
         });
         it('function should have been called', function () {
-          var foo = {bar: function(){}};
+          var foo = {
+            bar: function () {
+            }
+          };
           spyOn(foo, 'bar');
           foo.bar();
           expect(foo.bar).toHaveBeenCalled();
         });
         it('function should not have been called', function () {
-          var foo = {bar: function(){}};
+          var foo = {
+            bar: function () {
+            }
+          };
           spyOn(foo, 'bar');
 
           expect(foo.bar).not.toHaveBeenCalled();
         });
         it('function should have been called with parameter', function () {
-          var foo = {bar: function(num){}};
+          var foo = {
+            bar: function (num) {
+            }
+          };
           spyOn(foo, 'bar');
           foo.bar(1);
           expect(foo.bar).toHaveBeenCalledWith(1);
@@ -96,7 +105,7 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
         it('r should match /rh/', function () {
           expect(zombieTranslator.englishToZombie('r')).toMatch(/rh/);
         });
-        it("object a should equal 12", function() {
+        it("object a should equal 12", function () {
           var a = 12;
           expect(a).toEqual(12);
         });
@@ -119,7 +128,10 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
           expect(true).not.toBe(false);
         });
         it('function should not have been called with parameter', function () {
-          var foo = {bar: function(num){}};
+          var foo = {
+            bar: function (num) {
+            }
+          };
           spyOn(foo, 'bar');
           foo.bar(2);
           expect(foo.bar).not.toHaveBeenCalledWith(1);
@@ -138,7 +150,10 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
           expect(a).toBeUndefined();
         });
         it('function should have been called twice', function () {
-          var foo = {bar: function(){}};
+          var foo = {
+            bar: function () {
+            }
+          };
           spyOn(foo, 'bar');
           foo.bar();
           foo.bar();
@@ -153,11 +168,13 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
         it('null should be null', function () {
           expect(null).toBeNull();
         });
-        it("don't throw an exception", function() {
-          expect(function(){}).not.toThrow();
+        it("don't throw an exception", function () {
+          expect(function () {
+          }).not.toThrow();
         });
-        it("don't throw an error", function() {
-          expect(function(){}).not.toThrowError();
+        it("don't throw an error", function () {
+          expect(function () {
+          }).not.toThrowError();
         });
       });
 
@@ -165,13 +182,17 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
         it('a should be hra', function () {
           expect(zombieTranslator.englishToZombie('a')).toBe('hra');
         });
-        it("throw an exception", function() {
-          expect(function(){i++}).toThrow();
+        it("throw an exception", function () {
+          expect(function () {
+            i++
+          }).toThrow();
         });
-        it("throw an error", function() {
-          expect(function(){throw new Error}).toThrowError();
+        it("throw an error", function () {
+          expect(function () {
+            throw new Error
+          }).toThrowError();
         });
-        it("close to pi", function() {
+        it("close to pi", function () {
           expect(3.14).toBeCloseTo(Math.PI, 2);
         });
       });
@@ -182,14 +203,14 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
           expect(zombieTranslator.englishToZombie('? a')).toBe('? Hra');
           expect(zombieTranslator.englishToZombie('! a')).toBe('! Hra');
         });
-        it("E not to be close to PI", function() {
+        it("E not to be close to PI", function () {
           expect(Math.E).not.toBeCloseTo(Math.PI, 1);
         });
-        it("undefined var to be falsy", function() {
+        it("undefined var to be falsy", function () {
           var a;
           expect(a).toBeFalsy();
         });
-        it("defined var to be truthy", function() {
+        it("defined var to be truthy", function () {
           var a = 'foo';
           expect(a).toBeTruthy();
         });
@@ -292,6 +313,31 @@ define(['ZombieTranslator'], function (ZombieTranslator) {
           expect(zombieTranslator.zombieToEnglish('? Hra')).toBe('? a');
           expect(zombieTranslator.zombieToEnglish('! Hra')).toBe('! a');
         });
+      });
+    });
+    describe('zombieToEnglish full words', function () {
+      it('JhraZhrahn should be JaZahn', function () {
+        expect(zombieTranslator.zombieToEnglish('JhraZhrahn')).toBe('JaZahn');
+      });
+      it('prrtty should be petty', function () {
+        expect(zombieTranslator.zombieToEnglish('prrtty')).toBe('petty');
+      });
+      it('pRRrrtty should be pretty', function () {
+        expect(zombieTranslator.zombieToEnglish('pRRrrtty')).toBe('pretty');
+      });
+      it('bRRhrarrRrnSSS should be brains', function () {
+        expect(zombieTranslator.zombieToEnglish('bRRhrarrRrnSSS')).toBe('brains');
+      });
+    });
+
+    describe('englishToZombie sentences', function () {
+      it('The quick brown fox jumps over the lazy dog', function () {
+        expect(zombieTranslator.zombieToEnglish('Thrr qrrrrRrrrRrck bRRrrrRrwn frrrRrx jrrrrRrmpSSS rrrRrvrrrh thrr lhrazy drrrRrg'))
+          .toBe('The quick brown fox jumps over the lazy dog');
+      });
+      it('Lorem ipsum', function () {
+        expect(zombieTranslator.zombieToEnglish('LrrrRrRRrrm rrRrpsrrrrRrm drrrRrlrrrRrrh srrRrt hramrrt. CrrrRrnsrrctrrtrrrrRrrh hradrrRrprrRrscrrRrng rrlrrRrt'))
+          .toBe('Lorem ipsum dolor sit amet. consectetur adipiscing elit');
       });
     });
   });
