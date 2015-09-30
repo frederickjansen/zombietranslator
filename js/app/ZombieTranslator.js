@@ -9,6 +9,9 @@ define([], function () {
    * @returns string Output string in Zombie
    */
   ZombieTranslator.prototype.englishToZombie = function (str) {
+    // Make sure we're dealing with strings
+    str = str.toString();
+
     /*
      * Rules:
      * lower-case "r" at the end of words replaced with "rh".
@@ -81,6 +84,9 @@ define([], function () {
    * @returns string Output string in English
    */
   ZombieTranslator.prototype.zombieToEnglish = function (str) {
+    // Make sure we're dealing with strings
+    str = str.toString();
+
     // Detect first character of new sentence with lookahead, used for capitalization
     var capitalizationPass = str.replace(/(\.|\?|!)(=?\s\w)/g, function (match) {
       return match.substr(0, 2) + match.substr(-1, 1).toLowerCase();
